@@ -4,16 +4,30 @@ import { FastifyRequest } from "fastify";
 import validate from "./validator/index";
 import base64ToBuffer from "./base64";
 import urlToBuffer from "./url";
-const entry = async (field: IndexType, req: ExpressRequest | FastifyRequest) => {
-
+import multipart from "./multipart";
+const entry = async (
+  field: IndexType,
+  req: ExpressRequest | FastifyRequest
+) => {
   let value = validate(req.body[field]);
 
-  switch (value) {
-    case "url": req.body[field] = await urlToBuffer(req.body[field]);break;
-    case "base64": req.body[field] = base64ToBuffer(req.body[field]);break;
-    case "string":
-      break;
-  }
+  console.log(value);
+
+  return new Promise(async (resolve, reject) => {
+    let data;
+    switch (value) {
+      case "url":
+        data = await urlToBuffer(req.body[field]);
+        break;
+      case "base64":
+        data = base64ToBuffer(req.body[field]);
+        break;
+      case "unknown":
+        data = await multipart(req);
+        break;
+    }
+    return resolve(data);
+  });
 };
 
 export default entry;

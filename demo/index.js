@@ -1,4 +1,4 @@
-const package = require('../dist/lib/index.js');
+const customp = require('../dist/lib/index.js');
 
 const express = require('express')
 const app = express()
@@ -7,8 +7,9 @@ app.use(express.json())
 
 const port = 3000
 
-app.post('/', (req, res) => {
-    package.default("profile_image",req);
+app.post('/', async (req, res) => {
+    await customp.default("profile_image",req);
+    res.send(req.body.profile_image);
 })
 
 app.listen(port, () => {

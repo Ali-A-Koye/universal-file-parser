@@ -1,4 +1,5 @@
 import IndexType from "../types/index";
+
 import { Request as ExpressRequest } from "express";
 import { FastifyRequest } from "fastify";
 import validate from "./validator/index";
@@ -7,9 +8,15 @@ import urlToBuffer from "./url";
 import multipart from "./multipart";
 const entry = async (
   field: IndexType,
-  req: ExpressRequest | FastifyRequest
+  req: ExpressRequest | FastifyRequest,
+  options: { [key: string]: string } = {}
 ) => {
-  let value = validate(req.body[field]);
+  let value = "";
+  if ("type" in options) {
+    value = options.type;
+  } else {
+    value = validate(req.body[field]);
+  }
 
   let result = await new Promise(async (resolve, reject) => {
     let data;
@@ -20,7 +27,9 @@ const entry = async (
       case "base64":
         data = base64ToBuffer(req.body[field]);
         break;
-      case "unknown":
+      case "form-data": data = await multipart(req);
+        break;
+      default :  // if we couldn't find anything then it must be multipart || not exist
         data = await multipart(req);
         break;
     }
@@ -28,7 +37,6 @@ const entry = async (
   });
 
   req.body[field] = result;
-  
 };
 
 export default entry;

@@ -27,9 +27,10 @@ const entry = async (
       case "base64":
         data = base64ToBuffer(req.body[field]);
         break;
-      case "form-data": data = await multipart(req);
+      case "form-data":
+        data = await multipart(req);
         break;
-      default :  // if we couldn't find anything then it must be multipart || not exist
+      default: // if we couldn't find anything then it must be multipart || not exist
         data = await multipart(req);
         break;
     }

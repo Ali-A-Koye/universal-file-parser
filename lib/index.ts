@@ -30,7 +30,7 @@ const entry = async (
       case "form-data":
         data = await multipart(req);
         break;
-      default: // if we couldn't find anything then it must be multipart || not exist
+      case "unknown": // if we couldn't find anything then it must be multipart || not exist
         data = await multipart(req);
         break;
     }

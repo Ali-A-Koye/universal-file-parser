@@ -1,9 +1,8 @@
 import multer from "multer";
 const upload = multer();
-import { Request as ExpressRequest } from "express";
-import { FastifyRequest } from "fastify";
+import RequestType from "../../types/request";
 
-const multipart = async (req: ExpressRequest | FastifyRequest) => {
+const multipart = async (req:RequestType) => {
   return new Promise((resolve, reject) => {
     let data;
     //@ts-ignore

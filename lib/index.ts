@@ -1,14 +1,12 @@
 import IndexType from "../types/index";
-
-import { Request as ExpressRequest } from "express";
-import { FastifyRequest } from "fastify";
+import RequestType from "../types/request";
 import validate from "./validator/index";
 import base64ToBuffer from "./base64";
 import urlToBuffer from "./url";
 import multipart from "./multipart";
 const entry = async (
   field: IndexType,
-  req: ExpressRequest | FastifyRequest,
+  req: RequestType,
   options: { [key: string]: string } = {}
 ) => {
   let value = "";

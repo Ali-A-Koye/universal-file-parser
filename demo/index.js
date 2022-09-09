@@ -9,7 +9,8 @@ const upload = multer()
 const port = 3000
 
 app.post('/',async (req, res) => {
-  res.send(await customp.default("profile_image",req));
+  await customp.default("profile_image",req)
+  res.send(req.body.profile_image);
 })
 
 app.listen(port, () => {

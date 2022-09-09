@@ -11,9 +11,7 @@ const entry = async (
 ) => {
   let value = validate(req.body[field]);
 
-  console.log(value);
-
-  return new Promise(async (resolve, reject) => {
+  let result = await new Promise(async (resolve, reject) => {
     let data;
     switch (value) {
       case "url":
@@ -28,6 +26,9 @@ const entry = async (
     }
     return resolve(data);
   });
+
+  req.body[field] = result;
+  
 };
 
 export default entry;

@@ -22,7 +22,6 @@ This package is new and only supports 3 types ( Base64, URL, and Form Data ) but
 *   Supports 3 file formats ( Base64, URL (file by URL ), and multipart/form-data ).
 *   You can pass the Options and skip the checking stage ( for performance ).
 *   If your data is multipart/form-data , then it will parse the whole body as well.
-*   Support for Node.js's Frameworks
 *   Package built with Typescript, you will get the Typescript benefits of validation of your data if you already use Typescript.
 
 ## Table of Contents
